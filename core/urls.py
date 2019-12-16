@@ -23,7 +23,7 @@ from app.users.views import UserViewSet
 router = routers.DefaultRouter()
 router.trailing_slash = ''
 router.register('accountbooks', AccountBookViewSet)
-router.register('accountlists', ConsumeViewSet)
+router.register('consume', ConsumeViewSet)
 router.register('proportion', ProportionViewSet)
 router.register('categories', CategoryViewSet)
 router.register('users', UserViewSet)
