@@ -13,12 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
-
 from app.accounts.views import AccountBookViewSet, CategoryViewSet, ConsumeViewSet, ProportionViewSet
 from app.users.views import UserViewSet
+
+from django.contrib import admin
+from django.urls import path, include
+
+from rest_framework import routers
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 router = routers.DefaultRouter()
 router.trailing_slash = ''
@@ -29,6 +36,9 @@ router.register('categories', CategoryViewSet)
 router.register('users', UserViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('token', TokenObtainPairView.as_view(), name='token-create'),
+    path('token/refresh', TokenRefreshView.as_view(), name='token-refresh'),
+
+    path('admin/', admin.site.urls),
 ]
