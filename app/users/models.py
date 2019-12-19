@@ -41,3 +41,6 @@ class User(AbstractUser):
     @property
     def username(self):
         return self.email.split('@')[0]
+
+    def __str__(self):
+        return self.username
