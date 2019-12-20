@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager as AuthUerManager
 
+
+def user_image_path(instance, filename):
+    ext = os.path.splitext(filename)[-1]
+    now = str(time.time()).replace('.', '')
+    return os.path.join('users', '{}-{}{}'.format(now, str(instance), ext))
+
 class UserManager(AuthUerManager):
     def _create_user(self, email, password, **extra_fields):
         """
@@ -32,6 +38,7 @@ class UserManager(AuthUerManager):
 
 class User(AbstractUser):
     email = models.EmailField('電子郵件', unique=True)
+    profile = models.ImageField(blank=True, null=True, upload_to=user_image_path)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
