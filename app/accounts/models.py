@@ -50,6 +50,7 @@ class Category(models.Model):
 
 class Consume(models.Model):
     name = models.CharField(max_length=255)
+    note = models.TextField('備註', blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='付款人', related_name='paid')
     category = models.ForeignKey(Category, models.PROTECT, verbose_name='分類')
     image = models.ImageField(blank=True)
@@ -66,6 +67,7 @@ class Proportion(models.Model):
     fee = models.PositiveIntegerField('費用')
     is_repaid = models.BooleanField('已還款', default=False)
     consume = models.ForeignKey(Consume, on_delete=models.CASCADE, verbose_name='消費明細', related_name='list')
+    check_payment = models.BooleanField(null=True)
 
     class Meta:
         unique_together = (
