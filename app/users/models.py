@@ -32,6 +32,7 @@ class UserManager(AuthUerManager):
 
 class User(AbstractUser):
     email = models.EmailField('電子郵件', unique=True)
+    image = models.ImageField(blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
