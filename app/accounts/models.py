@@ -65,7 +65,6 @@ class Consume(models.Model):
 class Proportion(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='付款人', related_name='percent')
     fee = models.PositiveIntegerField('費用')
-    is_repaid = models.BooleanField('已還款', default=False)
     consume = models.ForeignKey(Consume, on_delete=models.CASCADE, verbose_name='消費明細', related_name='list')
     payment = models.PositiveIntegerField('還款', default=0)
 
