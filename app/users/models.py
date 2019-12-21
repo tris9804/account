@@ -40,6 +40,7 @@ class User(AbstractUser):
     email = models.EmailField('電子郵件', unique=True)
     profile = models.ImageField(blank=True, null=True, upload_to=user_image_path)
 
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

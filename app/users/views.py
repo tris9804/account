@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate
 
+from rest_framework import viewsets
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
-# from django.shortcuts import render
-from rest_framework import viewsets
 from .models import User
 from .serializers import UserSerializer, LoginSerializer
 
@@ -16,8 +15,9 @@ from .serializers import UserSerializer, LoginSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
     permission_classes = [IsAdminUser]
+
+
 
     def get_serializer_class(self):
         return {
@@ -40,3 +40,10 @@ class UserViewSet(viewsets.ModelViewSet):
             'token': token.key,
             'user': UserSerializer(user).data,
         })
+      
+    @action(['GET'], False, permission_classes=[IsAuthenticated])
+    def me(self, request):
+        serializer = self.get_serializer(request.user)
+
+        return Response(serializer.data)
+
