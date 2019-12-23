@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from datetime import timedelta
+import environ
+
+
+env = environ.Env()
+env.read_env()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -156,3 +161,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',
     'http://127.0.0.1:4200',
 ]
+
+EMAIL_URL = env.email_url()
+vars().update(EMAIL_URL)
